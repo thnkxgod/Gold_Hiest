@@ -25,4 +25,6 @@ wss.on('connection',(ws,req)=>{
     ws.on('close',()=>{guests.delete(cid);toHost({ev:'close',cid});});
   }
 });
-srv.listen(PORT,'0.0.0.0',()=>console.log(`Gold Heist: http://${ip()}:${PORT}`));
+srv.listen(PORT, '0.0.0.0', () => {
+  console.log(`Gold Heist server listening on port ${PORT}`);
+});
