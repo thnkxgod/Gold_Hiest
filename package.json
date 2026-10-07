@@ -1,0 +1,1 @@
+{"name":"gold-heist","version":"1.0.0","main":"server.js","dependencies":{"ws":"^8.18.0"},"scripts":{"start":"node server.js gold-heist.html"}}
