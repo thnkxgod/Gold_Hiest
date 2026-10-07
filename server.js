@@ -1,9 +1,9 @@
 const http=require('http'),fs=require('fs'),path=require('path'),os=require('os');
 const {WebSocketServer}=require('ws');
-const FILE=path.join(__dirname,process.argv[2]||'gold-heist.html'),PORT=8765;
+const FILE=path.join(__dirname,process.argv[2]||'gold-heist.html'),PORT=process.env.PORT||8765;
 const ip=()=>{for(const l of Object.values(os.networkInterfaces()))for(const a of l||[])if(a.family==='IPv4'&&!a.internal)return a.address;return'localhost';};
 const srv=http.createServer((req,res)=>{
-  if(req.url==='/info'){res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify({url:`http://${ip()}:${PORT}`}));}
+if(req.url==='/info'){res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify({url:`${req.headers['x-forwarded-proto']||'http'}://${req.headers.host}`}));}
   else if(req.url==='/'||req.url.startsWith('/?')||req.url==='/index.html'){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});fs.createReadStream(FILE).pipe(res);}
   else{res.writeHead(404);res.end();}
 });
